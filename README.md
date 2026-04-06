@@ -1,5 +1,5 @@
 # Water-Potability-ML-Model
-Water Ptability - Safe Drinking Water
+Water Ptability - Safe Drinking Water  
 Clean water is one of the world's most precious resources, yet determining if a water source is potable (safe to drink) can be rather difficult. For my project, I wanted to see if Machine Learning could predict water safety based on specific metrics, from pH levels to sulfate concentration.
 
 The Problem:  
