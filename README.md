@@ -1,32 +1,180 @@
-# Water-Potability-ML-Model
-Water Potability - Safe Drinking Water  
-Clean water is one of the world's most precious resources, yet determining if a water source is potable (safe to drink) can be rather difficult. For my project, I wanted to see if Machine Learning could predict water safety based on specific metrics, from pH levels to sulfate concentration.
+Public Portfolio Post
+Can Machine Learning Predict Safe Drinking Water?
+Clean drinking water is something most people never question. We turn on a faucet and assume what comes out is safe. In reality, determining water safety is very difficult and depends on a mix of chemical properties that aren’t always easy to evaluate quickly.
+That led me to the question:
+Can a machine learning model predict whether water is safe to drink using only its chemical and physical properties?
 
-The Problem:  
-The primary goal of this project was to answer the question of "can you reliably predict if water is safe to drink using only its chemical and physical properties?". In the real world, testing every single water source for every possible contaminant is expensive and time consuming. If a machine learning model can accurately flag suspicious water based on standard sensor data then lab testing can be used for more needed cases.
+Why This Problem Matters
 
-The Investigation: Three Experiments  
-For this project I ran three different experiments using a Random Forest model algorithm.
-I started by filling in missing data gaps with simple averages. This gave a starting accuracy of about 65%.
-I realized that water data can have outliers and so by using the median instead of the average and tuning the model’s depth, the accuracy climbed to 67%.
+Testing water quality in the real world is expensive and time consuming. Comprehensive lab testing is accurate, but not always practical at large scale. If a model could use commonly collected measurements like pH or sulfate levels to flag potentially unsafe water, it could:
 
-Safety First: In water safety, a False Positive (saying water is safe when it’s actually toxic) is the worst case scenario. I adjusted the model to pay extra attention to the "Safe" samples, ensuring it didn't just take the easy path of predicting everything as "Unsafe."
+Help prioritize which samples need deeper testing
+Support monitoring in remote or under-resourced areas
+Serve as an early warning system for contamination
+For that to work, the model has to have high accuracy and it has to make the right kinds of predictions.
 
-Key Findings:  
-After analyzing the data, two main factors showed as the most important factors in determining safety:
+I began with a straightforward approach: a Random Forest model trained on a dataset of over 3,000 water samples, each labeled as safe or unsafe.
 
-Sulfates: This was the #1 predictor. High sulfate levels often correlate with industrial runoff or mineral deposits, which significantly impact potability.
+At first, the results were about 65% accuracy which seemed somewhat promising. However, the model was mostly learning how to predict unsafe water. Since the dataset contained more unsafe samples than safe ones, the model was taking the easiest path defaulting toward the majority class. That meant it wasn’t very good at identifying safe drinking water, which is the outcome that actually matters.
 
-pH Levels: The acidity or alkalinity of the water was the second most vital variable. Even if other minerals are within range, a pH that is too high or too low makes water undrinkable.
+Instead of jumping to a more complex model, I focused on improving how the data was handled.
+Some of the most important features like pH and sulfate levels had missing values. Initially I filled these using mean, but chose to swap to using median as it is more resistant to outliers. Switching to median imputation made the data more realistic and slightly improved performance.
 
-Conclusion: While the model reached 67% accuracy, the research shows that water safety is nuanced. These metrics provide a early warning system, but there are larger factors that includes bacteria and local environmental factors that need to be accounted for.
+Tuning the Model
 
-What I Learned:  
-Through this project, I learned that data cleaning is just as important as the model itself. How you choose to fill in missing information (like a missing pH reading) can change how the model perceives safety. I also learned the importance of Precision vs. Recall in a health related project and that being mostly right isn't good enough, you have to be right about the things that can hurt people.
+I adjusted the model to reduce overfitting by:
 
-Why It Matters:  
-This project demonstrates that data science is largely about decision making. By using models like these, environmental agencies could deploy low cost sensors in remote areas to monitor water in real time. This could be a step towards better water monitoring and ensuring everyone has access to safe drinking water.
+Limiting tree depth and increasing the number of trees. This helped the model generalize better, increasing accuracy to about 67%.
+The biggest shift came when I addressed class imbalance. By weighting the model to pay more attention to the minority class (safe water), it became better at identifying potable samples.
+This didn’t significantly increase accuracy but it made the model more aligned with the real world goal.
 
-Citations:  
-Dataset is from Kaggle.  
-Kadiwal, A. (2020). Water Potability [Data set]. Kaggle. https://www.kaggle.com/datasets/adityakadiwal/water-potability
+What the Model Revealed
+
+Two features consistently stood out in importance:
+
+Sulfates – the strongest predictor, often linked to contamination or mineral content
+pH levels – critical for determining whether water is chemically safe to consume
+
+These results reflect real world water quality standards, suggesting the model was learning meaningful connections.
+
+What I Learned
+
+This project changed how I think about machine learning.
+
+I first thought success came from choosing the right model. Instead I found that the most important parts were:
+
+How missing data is handled
+How imbalance in the dataset is addressed
+How performance is evaluated beyond accuracy
+
+There is one thing that really stood out and that is that a model can look good on paper while still failing at the task that actually matters.
+This project shows that machine learning isn’t just about prediction and that it’s about decision making.
+
+A model like this could help:
+
+Monitor water quality more efficiently
+Support environmental agencies
+Expand access to safe water in underserved areas
+
+It is important to say this is not a replacement for lab testing but it could be a powerful tool for deciding where to focus attention.
+
+
+
+Technical Report
+1. Dataset & Problem Framing
+Dataset: Water Potability Dataset (Kaggle)
+Size: ~3,276 samples, 9 features + 1 target
+Target Variable: Potability
+0 = Not safe
+1 = Safe
+Research Question
+
+Can a machine learning model accurately classify water as potable using chemical and physical properties?
+
+2. Data Preprocessing & Assumptions
+Missing Values
+
+Missing data present in:
+
+pH
+Sulfate
+Trihalomethanes
+Approaches Used
+Experiment 1: Mean imputation
+Experiment 2 & 3: Median imputation
+
+Rationale:
+Median is more robust to outliers, which are common in environmental data.
+
+Feature Handling
+All features are numerical → no encoding required
+No normalization applied (Random Forest is scale-invariant)
+Train/Test Split
+80/20 split
+Stratified sampling used to preserve class distribution
+3. Model Experiments
+
+All experiments used Random Forest Classifier.
+
+Experiment 1: Baseline
+Mean imputation
+Default hyperparameters
+
+Purpose: Establish baseline performance
+
+Result: ~65% accuracy
+
+Experiment 2: Tuned Model
+Median imputation
+Increased number of trees
+Limited max depth
+
+Rationale:
+
+Reduce overfitting
+Improve generalization
+
+Result: ~67% accuracy
+
+Experiment 3: Class Imbalance Adjustment
+Same as Experiment 2
+Added class_weight = 'balanced'
+
+Rationale:
+
+Dataset skewed toward non-potable samples
+Improve detection of minority class (safe water)
+
+Outcome:
+
+Improved balance in predictions
+Better F1 score for potable class
+4. Model Evaluation & Interpretation
+Metrics Used
+Accuracy
+F1 Score
+Key Findings
+Baseline model biased toward majority class
+Tuned model improved generalization slightly
+Balanced model improved meaningful performance (minority class detection)
+Interpretation
+Accuracy alone was insufficient due to imbalance
+F1 score provided better insight into real performance
+Model improvements were driven more by preprocessing than algorithm changes
+5. Feature Importance
+
+Top contributing features:
+
+Sulfates
+pH
+
+Interpretation:
+These features align with real world water safety indicators, suggesting the model captured meaningful relationships.
+
+6. Limitations, Ethics, & Reflection
+Limitations
+No biological contaminants included
+No geographic or temporal data
+Moderate dataset size
+Ethical Considerations
+False positives (unsafe water labeled safe) are high-risk
+Model should assist—not replace—lab testing
+Reflection
+Data preprocessing had the largest impact on results
+Model performance depends heavily on how the problem is framed
+7. Code Quality & Reproducibility
+Structured workflow with clear experiment stages
+Consistent preprocessing pipeline
+Results stored and compared systematically
+Reproducibility Steps
+Load dataset
+Apply preprocessing (mean/median imputation)
+Split data (80/20 stratified)
+Train Random Forest models
+Evaluate using accuracy and F1 score
+Compare results across experiments
+Citation
+
+Kadiwal, A. (2020). Water Potability Dataset. Kaggle
+https://www.kaggle.com/datasets/adityakadiwal/water-potability
+
