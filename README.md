@@ -182,6 +182,7 @@ Evaluate using accuracy and F1 score
 Compare results across experiments
 Citation
 
+(Synthetically generated)
 Kadiwal, A. (2020). Water Potability Dataset. Kaggle
 https://www.kaggle.com/datasets/adityakadiwal/water-potability
 
