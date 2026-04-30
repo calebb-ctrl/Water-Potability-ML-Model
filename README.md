@@ -37,6 +37,8 @@ pH levels – critical for determining whether water is chemically safe to consu
 
 These results reflect real world water quality standards, suggesting the model was learning meaningful connections.
 
+![rf_experiements_comparison](rf_experiments_comparison.png)
+
 What I Learned
 
 This project changed how I think about machine learning.
