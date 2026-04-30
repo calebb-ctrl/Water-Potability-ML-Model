@@ -118,7 +118,7 @@ Limited max depth: 15
 
 Rationale:
 
-Reduce overfitting
+Reduce overfitting,
 Improve generalization
 
 Result: ~67% accuracy
@@ -129,7 +129,7 @@ Added class_weight = 'balanced'
 
 Rationale:
 
-Dataset skewed toward non-potable samples
+Dataset skewed toward non-potable samples,
 Improve detection of minority class (safe water)
 
 Outcome:
