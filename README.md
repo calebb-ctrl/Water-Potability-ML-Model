@@ -59,7 +59,7 @@ Monitor water quality more efficiently
 Support environmental agencies
 Expand access to safe water in underserved areas
 
-It is important to say this is not a replacement for lab testing but it could be a powerful tool for deciding where to focus attention.
+It is important to say this is not a replacement for lab testing but it could be a powerful tool for deciding where to focus attention. Reasoning being that a source of water given a false positive output labeling it as safe when its not, if not tested beyond this model, could get people very sick if drank.
 
 
 
@@ -164,8 +164,8 @@ No biological contaminants included
 No geographic or temporal data
 Moderate dataset size
 Ethical Considerations
-False positives (unsafe water labeled safe) are high-risk
-Model should assist—not replace—lab testing
+False positives (unsafe water labeled safe) are high risk
+Model should assist not replace lab testing
 Reflection
 Data preprocessing had the largest impact on results
 Model performance depends heavily on how the problem is framed
