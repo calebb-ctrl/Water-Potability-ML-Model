@@ -9,7 +9,7 @@ Why This Problem Matters
 Testing water quality in the real world is expensive and time consuming. Comprehensive lab testing is accurate, but not always practical at large scale. If a model could use commonly collected measurements like pH or sulfate levels to flag potentially unsafe water, it could:
 
 Help prioritize which samples need deeper testing
-Support monitoring in remote or under-resourced areas
+Support monitoring in remote or under served areas
 Serve as an early warning system for contamination
 For that to work, the model has to have high accuracy and it has to make the right kinds of predictions.
 
@@ -19,6 +19,7 @@ At first, the results were about 65% accuracy which seemed somewhat promising. H
 
 Instead of jumping to a more complex model, I focused on improving how the data was handled.
 Some of the most important features like pH and sulfate levels had missing values. Initially I filled these using mean, but chose to swap to using median as it is more resistant to outliers. Switching to median imputation made the data more realistic and slightly improved performance.
+I also checked for other data processing that might of needed to be done but the dataset ending up needing minimal preprocessing only having to fill in missing values.
 
 Tuning the Model
 
@@ -101,6 +102,10 @@ All experiments used Random Forest Classifier.
 Experiment 1: Baseline
 Mean imputation
 Default hyperparameters
+Number of trees: 100
+Max features Square root of total features.
+Max depth: None
+Min Samples per Leaf: 1
 
 Purpose: Establish baseline performance
 
@@ -108,8 +113,8 @@ Result: ~65% accuracy
 
 Experiment 2: Tuned Model
 Median imputation
-Increased number of trees
-Limited max depth
+Increased number of trees: 200
+Limited max depth: 15
 
 Rationale:
 
