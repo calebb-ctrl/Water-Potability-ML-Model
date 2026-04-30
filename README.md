@@ -9,6 +9,7 @@ Why This Problem Matters
 Testing water quality in the real world is expensive and time consuming. Comprehensive lab testing is accurate, but not always practical at large scale. If a model could use commonly collected measurements like pH or sulfate levels to flag potentially unsafe water, it could:
 
 Help prioritize which samples need deeper testing
+
 Support monitoring in remote or under served areas
 Serve as an early warning system for contamination
 For that to work, the model has to have high accuracy and it has to make the right kinds of predictions.
